@@ -84,7 +84,7 @@ export function MemoryForm({ onSubmit }: MemoryFormProps) {
           <Button
             onClick={handleNext}
             disabled={!currentValue.trim()}
-            className="bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white shadow-lg gap-2 px-6"
+            className="bg-gradient-to-r from-[#C2410C] to-[#9A3412] hover:from-[#9A3412] hover:to-[#78350F] text-white shadow-lg shadow-orange-900/20 gap-2 px-6"
           >
             <Sparkles className="w-4 h-4" />
             Bring This Memory to Life

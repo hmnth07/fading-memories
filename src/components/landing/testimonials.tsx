@@ -23,7 +23,7 @@ const testimonials = [
 
 export function Testimonials() {
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-transparent via-rose-50/30 to-transparent">
+    <section className="py-24 px-4 bg-gradient-to-b from-transparent via-[#F0E6D8]/30 to-transparent">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -38,7 +38,7 @@ export function Testimonials() {
           {testimonials.map((t) => (
             <Card
               key={t.author}
-              className="border-0 shadow-sm bg-white/60 backdrop-blur-sm hover:shadow-md transition-shadow"
+              className="border-0 shadow-sm bg-[#FAF6F1]/80 backdrop-blur-sm hover:shadow-md transition-shadow"
             >
               <CardContent className="p-6">
                 <p className="text-foreground leading-relaxed mb-6 italic">

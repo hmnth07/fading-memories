@@ -6,24 +6,24 @@ const steps = [
     title: "Describe Your Memory",
     description:
       "Answer a few gentle questions about the memory you want to preserve — who was there, where you were, how it felt.",
-    iconColor: "text-rose-500",
-    bg: "bg-rose-50",
+    iconColor: "text-[#C2410C]",
+    bg: "bg-orange-100",
   },
   {
     icon: Wand2,
     title: "We Bring It to Life",
     description:
       "Our AI transforms your words into beautiful anime-style artwork that captures the emotion and atmosphere of your memory.",
-    iconColor: "text-amber-500",
-    bg: "bg-amber-50",
+    iconColor: "text-[#CA8A04]",
+    bg: "bg-amber-100",
   },
   {
     icon: Download,
     title: "Keep It Forever",
     description:
       "Download your memory as a stunning image or an animated living photo — a moment preserved before it fades away.",
-    iconColor: "text-sky-500",
-    bg: "bg-sky-50",
+    iconColor: "text-[#78350F]",
+    bg: "bg-[#F0E6D8]",
   },
 ];
 

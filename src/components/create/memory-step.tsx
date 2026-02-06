@@ -19,7 +19,7 @@ export function MemoryStepComponent({ step, value, onChange }: MemoryStepProps) 
         onChange={(e) => onChange(e.target.value)}
         placeholder={step.placeholder}
         rows={4}
-        className="resize-none text-base leading-relaxed bg-white/60 backdrop-blur-sm border-rose-200/50 focus:border-rose-300 focus:ring-rose-300/20"
+        className="resize-none text-base leading-relaxed bg-white/60 backdrop-blur-sm border-[#E5D9C8] focus:border-[#C2410C] focus:ring-[#C2410C]/20"
       />
     </div>
   );

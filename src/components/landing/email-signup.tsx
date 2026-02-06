@@ -46,8 +46,8 @@ export function EmailSignup() {
   return (
     <section className="py-16 px-4">
       <div className="max-w-md mx-auto text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-rose-50 mb-4">
-          <Mail className="w-5 h-5 text-rose-500" />
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-orange-100 mb-4">
+          <Mail className="w-5 h-5 text-[#C2410C]" />
         </div>
         <h3 className="text-xl font-semibold mb-2">Stay Connected</h3>
         <p className="text-muted-foreground text-sm mb-6">
@@ -72,7 +72,7 @@ export function EmailSignup() {
             <Button
               type="submit"
               disabled={status === "loading"}
-              className="bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white"
+              className="bg-gradient-to-r from-[#C2410C] to-[#9A3412] hover:from-[#9A3412] hover:to-[#78350F] text-white"
             >
               {status === "loading" ? "..." : "Subscribe"}
             </Button>

@@ -44,25 +44,23 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  --color-rose-50: #fff1f2;
-  --color-rose-100: #ffe4e6;
-  --color-rose-200: #fecdd3;
-  --color-rose-300: #fda4af;
-  --color-rose-400: #fb7185;
-  --color-rose-500: #f43f5e;
-  --color-rose-600: #e11d48;
-  --color-amber-50: #fffbeb;
-  --color-amber-100: #fef3c7;
-  --color-amber-200: #fde68a;
-  --color-amber-300: #fcd34d;
-  --color-amber-400: #fbbf24;
-  --color-amber-500: #f59e0b;
-  --color-sky-50: #f0f9ff;
-  --color-sky-100: #e0f2fe;
-  --color-sky-200: #bae6fd;
-  --color-sky-300: #7dd3fc;
-  --color-sky-400: #38bdf8;
-  --color-sky-500: #0ea5e9;
+  /* Autumn Nostalgia palette */
+  --color-warm-cream: #FAF6F1;
+  --color-soft-tan: #F0E6D8;
+  --color-terracotta: #C2410C;
+  --color-burnt-sienna: #9A3412;
+  --color-warm-brown: #78350F;
+  --color-mustard: #CA8A04;
+  --color-deep-gold: #A16207;
+  --color-espresso: #3C2415;
+  --color-dusty-rose: #B08A7D;
+
+  /* Extended Tailwind orange palette for gradients */
+  --color-orange-100: #FFEDD5;
+  --color-orange-300: #FDBA74;
+  --color-amber-100: #FEF3C7;
+  --color-amber-200: #FDE68A;
+  --color-rose-200: #FECDD3;
 
   --animate-bounce-slow: bounce-slow 3s ease-in-out infinite;
   --animate-fade-in: fade-in 0.6s ease-out forwards;
@@ -72,37 +70,38 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.985 0.002 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.586 0.209 357.528);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0.005 357);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0.005 357);
-  --accent-foreground: oklch(0.205 0 0);
+  /* Autumn Nostalgia theme */
+  --background: #FAF6F1;
+  --foreground: #3C2415;
+  --card: #FAF6F1;
+  --card-foreground: #3C2415;
+  --popover: #FAF6F1;
+  --popover-foreground: #3C2415;
+  --primary: #C2410C;
+  --primary-foreground: #FAF6F1;
+  --secondary: #F0E6D8;
+  --secondary-foreground: #3C2415;
+  --muted: #F0E6D8;
+  --muted-foreground: #78350F;
+  --accent: #CA8A04;
+  --accent-foreground: #FAF6F1;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0.004 357);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.586 0.209 357.528);
+  --border: #E5D9C8;
+  --input: #E5D9C8;
+  --ring: #C2410C;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.586 0.209 357.528);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #FAF6F1;
+  --sidebar-foreground: #3C2415;
+  --sidebar-primary: #C2410C;
+  --sidebar-primary-foreground: #FAF6F1;
+  --sidebar-accent: #F0E6D8;
+  --sidebar-accent-foreground: #3C2415;
+  --sidebar-border: #E5D9C8;
+  --sidebar-ring: #C2410C;
 }
 
 @layer base {
@@ -135,6 +134,66 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(244, 63, 94, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(244, 63, 94, 0.6); }
+  0%, 100% { box-shadow: 0 0 20px rgba(194, 65, 12, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(194, 65, 12, 0.6); }
+}
+
+/* Falling leaves animation - GPU accelerated */
+@keyframes fall {
+  0% {
+    transform: translateY(-10px) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) translateX(20px);
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-15deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+/* Floating polaroids animation */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0) rotate(var(--rotation, 0deg));
+  }
+  50% {
+    transform: translateY(-15px) rotate(var(--rotation, 0deg));
+  }
+}
+
+.animate-fall {
+  animation: fall linear infinite;
+  will-change: transform;
+}
+
+.animate-sway {
+  animation: sway ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fall,
+  .animate-sway,
+  .animate-float-slow,
+  .animate-float {
+    animation: none;
+  }
 }

@@ -24,8 +24,8 @@ export function GeneratingState() {
     <div className="flex flex-col items-center justify-center py-24 animate-fade-in">
       {/* Pulsing orb */}
       <div className="relative mb-12">
-        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-rose-400 via-amber-400 to-sky-400 animate-pulse" />
-        <div className="absolute inset-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400 via-amber-400 to-sky-400 blur-xl opacity-50 animate-pulse" />
+        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#C2410C] via-[#CA8A04] to-[#78350F] animate-pulse" />
+        <div className="absolute inset-0 w-32 h-32 rounded-full bg-gradient-to-br from-[#C2410C] via-[#CA8A04] to-[#78350F] blur-xl opacity-50 animate-pulse" />
       </div>
 
       {/* Message */}

@@ -97,7 +97,7 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <Button
           onClick={handleDownloadImage}
-          className="flex-1 bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white gap-2"
+          className="flex-1 bg-gradient-to-r from-[#C2410C] to-[#9A3412] hover:from-[#9A3412] hover:to-[#78350F] text-white gap-2"
         >
           <Download className="w-4 h-4" />
           Download Image
@@ -125,7 +125,7 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
 
       {/* Particle selection */}
       {gifState === "selecting" && (
-        <Card className="p-6 border-rose-200/50 animate-fade-in">
+        <Card className="p-6 border-[#E5D9C8] animate-fade-in">
           <h3 className="font-semibold mb-3">Choose a particle effect</h3>
           <div className="flex flex-wrap gap-2 mb-4">
             {PARTICLE_OPTIONS.map((opt) => (
@@ -134,7 +134,7 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
                 onClick={() => setSelectedParticle(opt.value)}
                 className={`px-4 py-2 rounded-full text-sm transition-colors ${
                   selectedParticle === opt.value
-                    ? "bg-rose-500 text-white"
+                    ? "bg-[#C2410C] text-white"
                     : "bg-muted hover:bg-muted/80"
                 }`}
               >
@@ -144,7 +144,7 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
           </div>
           <Button
             onClick={handleEncodeGif}
-            className="bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white gap-2"
+            className="bg-gradient-to-r from-[#C2410C] to-[#9A3412] hover:from-[#9A3412] hover:to-[#78350F] text-white gap-2"
           >
             <Film className="w-4 h-4" />
             Generate Living Photo
@@ -154,7 +154,7 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
 
       {/* Encoding state */}
       {gifState === "encoding" && (
-        <Card className="p-6 border-rose-200/50 animate-fade-in">
+        <Card className="p-6 border-[#E5D9C8] animate-fade-in">
           <div className="flex items-center gap-3 text-muted-foreground">
             <Loader2 className="w-5 h-5 animate-spin" />
             <span>Creating your living photo...</span>
@@ -176,7 +176,7 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
           <div className="p-4">
             <Button
               onClick={handleDownloadGif}
-              className="w-full bg-gradient-to-r from-rose-500 to-amber-500 hover:from-rose-600 hover:to-amber-600 text-white gap-2"
+              className="w-full bg-gradient-to-r from-[#C2410C] to-[#9A3412] hover:from-[#9A3412] hover:to-[#78350F] text-white gap-2"
             >
               <Download className="w-4 h-4" />
               Download Living Photo
