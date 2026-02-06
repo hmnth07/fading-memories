@@ -188,12 +188,45 @@
   animation: float-slow 8s ease-in-out infinite;
 }
 
+/* Anime sparkle animation - 4-point star twinkle effect */
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+@keyframes sparkle-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-sparkle-pulse {
+  animation: sparkle-pulse 1.5s ease-in-out infinite;
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   .animate-fall,
   .animate-sway,
   .animate-float-slow,
-  .animate-float {
+  .animate-float,
+  .animate-sparkle,
+  .animate-sparkle-pulse {
     animation: none;
   }
 }

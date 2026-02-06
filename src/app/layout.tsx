@@ -10,12 +10,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Fading Memories — Bring Your Memories Back to Life",
+  title: "Memory to Anime — Transform Your Memories Into Anime Art",
   description:
-    "Describe your fading memories and watch them transform into beautiful anime-style artwork. Before they fade completely, bring your memories back to life.",
+    "Describe your most precious memories and watch them transform into beautiful anime-style artwork. Your memories deserve to be art.",
   openGraph: {
-    title: "Fading Memories",
-    description: "Before they fade completely, bring your memories back to life.",
+    title: "Memory to Anime — Transform Your Memories Into Anime Art",
+    description: "Describe your most precious memories and watch them transform into beautiful anime-style artwork. Your memories deserve to be art.",
     type: "website",
   },
 };

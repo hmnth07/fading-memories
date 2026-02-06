@@ -7,10 +7,10 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <p className="text-lg font-bold bg-gradient-to-r from-[#CA8A04] via-[#C2410C] to-[#9A3412] bg-clip-text text-transparent">
-              Fading Memories
+              Memory to Anime
             </p>
             <p className="text-sm mt-1 text-[#F0E6D8]/50">
-              Before they fade completely, bring your memories back to life.
+              Your memories deserve to be art.
             </p>
           </div>
 
@@ -21,7 +21,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-[#F0E6D8]/10 mt-8 pt-6 text-center text-xs text-[#F0E6D8]/40">
-          &copy; {new Date().getFullYear()} Fading Memories. All rights reserved.
+          &copy; {new Date().getFullYear()} Memory to Anime. All rights reserved.
         </div>
       </div>
     </footer>

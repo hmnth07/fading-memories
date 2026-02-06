@@ -55,6 +55,24 @@ const POLAROIDS: Polaroid[] = [
   },
 ];
 
+// 4-point sparkle SVG for anime effect
+function Sparkle({ size, color, className }: { size: number; color: string; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z"
+        fill={color}
+      />
+    </svg>
+  );
+}
+
 // Abstract "memory" shape - silhouettes suggesting scenes
 function MemoryScene({ gradient, accentColor }: { gradient: string; accentColor: string }) {
   return (
@@ -75,6 +93,13 @@ function MemoryScene({ gradient, accentColor }: { gradient: string; accentColor:
       </svg>
       {/* Soft vignette */}
       <div className="absolute inset-0 bg-gradient-to-t from-white/40 via-transparent to-white/20" />
+      {/* Anime sparkle overlay */}
+      <div className="absolute top-1 right-1 animate-sparkle-pulse">
+        <Sparkle size={8} color={accentColor} />
+      </div>
+      <div className="absolute bottom-2 left-2 animate-sparkle-pulse" style={{ animationDelay: "0.5s" }}>
+        <Sparkle size={6} color={accentColor} className="opacity-70" />
+      </div>
       {/* Film grain texture */}
       <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E")`,

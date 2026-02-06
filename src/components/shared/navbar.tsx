@@ -26,7 +26,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold bg-gradient-to-r from-[#C2410C] via-[#9A3412] to-[#78350F] bg-clip-text text-transparent">
-              Fading Memories
+              Memory to Anime
             </span>
           </Link>
 
