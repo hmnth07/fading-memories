@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fading Memories
 
-## Getting Started
+> Before they fade completely, bring your memories back to life.
 
-First, run the development server:
+Describe fading memories in words and transform them into beautiful artwork. Answer six gentle questions about your memory, and AI brings it to life as an image — with optional animated "living photo" GIFs.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- **Guided Memory Capture**: 6-step wizard asks about who, where, what, atmosphere, details, and feeling
+- **AI Image Generation**: Transforms your words into artwork via Flux Schnell
+- **Living Photos**: Animated GIFs with Ken Burns effect + particle overlays (sakura, dust, rain, snow, fireflies)
+- **Rate Limiting**: 5 free generations per day (localStorage-based)
+- **Email Waitlist**: Supabase-powered email signup
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router, TypeScript)
+- **Styling**: Tailwind CSS v4 + shadcn/ui
+- **AI**: Replicate (Flux Schnell model)
+- **Database**: Supabase (email signups only)
+- **GIF Encoding**: modern-gif + Canvas API
+
+## Setup
+
+1. **Clone and install**:
+   ```bash
+   git clone https://github.com/yourusername/fading-memories.git
+   cd fading-memories
+   npm install
+   ```
+
+2. **Configure environment variables**:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Fill in:
+   - `REPLICATE_API_TOKEN` — from [replicate.com](https://replicate.com)
+   - `NEXT_PUBLIC_SUPABASE_URL` — from your Supabase project
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — from your Supabase project
+
+3. **Set up Supabase** (optional, for email signups):
+
+   Run this SQL in your Supabase SQL Editor:
+   ```sql
+   CREATE TABLE IF NOT EXISTS email_signups (
+     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+     email text UNIQUE NOT NULL,
+     created_at timestamptz DEFAULT now(),
+     metadata jsonb DEFAULT '{}'::jsonb
+   );
+
+   ALTER TABLE email_signups ENABLE ROW LEVEL SECURITY;
+
+   CREATE POLICY "Anyone can insert email signups"
+     ON email_signups FOR INSERT TO anon WITH CHECK (true);
+   ```
+
+4. **Run development server**:
+   ```bash
+   npm run dev
+   ```
+
+5. **Open** [http://localhost:3000](http://localhost:3000)
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── page.tsx              # Landing page
+│   ├── create/page.tsx       # Memory creation wizard
+│   └── api/generate/route.ts # Image generation endpoint
+├── components/
+│   ├── landing/              # Hero, HowItWorks, Testimonials, etc.
+│   ├── create/               # MemoryForm, GeneratingState, ResultView
+│   └── ui/                   # shadcn/ui components
+├── lib/
+│   ├── replicate.ts          # Replicate client config
+│   ├── prompt-composer.ts    # Converts memory → image prompt
+│   ├── gif-encoder.ts        # Canvas animation + GIF export
+│   └── rate-limit.ts         # localStorage rate limiting
+└── types/
+    └── memory.ts             # TypeScript interfaces
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Deploy to Vercel:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+vercel
+```
 
-## Learn More
+Set environment variables in Vercel dashboard.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
