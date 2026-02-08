@@ -12,8 +12,9 @@ export default function CreatePage() {
   const [state, setState] = useState<CreatePageState>("form");
   const [result, setResult] = useState<GenerationResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [lastFormData, setLastFormData] = useState<MemoryFormData | null>(null);
 
-  async function handleSubmit(data: MemoryFormData) {
+  async function handleSubmit(data: MemoryFormData, feedback?: string) {
     if (!canGenerate()) {
       setError(
         "You've reached your daily limit of 5 generations. Come back tomorrow!"
@@ -23,12 +24,13 @@ export default function CreatePage() {
 
     setState("generating");
     setError(null);
+    setLastFormData(data);
 
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, ...(feedback ? { feedback } : {}) }),
       });
 
       if (!response.ok) {
@@ -44,13 +46,20 @@ export default function CreatePage() {
       setError(
         err instanceof Error ? err.message : "Something went wrong. Please try again."
       );
-      setState("form");
+      setState(result ? "result" : "form");
+    }
+  }
+
+  function handleIterate(feedback: string) {
+    if (lastFormData) {
+      handleSubmit(lastFormData, feedback);
     }
   }
 
   function handleCreateAnother() {
     setResult(null);
     setError(null);
+    setLastFormData(null);
     setState("form");
   }
 
@@ -75,10 +84,20 @@ export default function CreatePage() {
           </div>
         )}
 
-        {state === "form" && <MemoryForm onSubmit={handleSubmit} />}
+        {state === "form" && (
+          <MemoryForm
+            onSubmit={(data) => handleSubmit(data)}
+            initialData={lastFormData ?? undefined}
+          />
+        )}
         {state === "generating" && <GeneratingState />}
         {state === "result" && result && (
-          <ResultView result={result} onCreateAnother={handleCreateAnother} />
+          <ResultView
+            result={result}
+            onCreateAnother={handleCreateAnother}
+            onIterate={handleIterate}
+            remainingGenerations={getRemainingGenerations()}
+          />
         )}
       </div>
     </div>

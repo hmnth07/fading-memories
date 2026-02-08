@@ -3,22 +3,16 @@ import { replicate, MODEL_ID, DEFAULT_PARAMS } from "@/lib/replicate";
 import { composePrompt } from "@/lib/prompt-composer";
 import type { MemoryFormData } from "@/types/memory";
 
-const REQUIRED_FIELDS: (keyof MemoryFormData)[] = [
-  "who",
-  "where",
-  "what",
-  "atmosphere",
-  "details",
-  "feeling",
-];
-
+const REQUIRED_FIELDS: (keyof MemoryFormData)[] = ["who", "where", "what"];
+const OPTIONAL_FIELDS: (keyof MemoryFormData)[] = ["atmosphere", "details", "feeling"];
 const MAX_FIELD_LENGTH = 1000;
+const MAX_FEEDBACK_LENGTH = 500;
 
 export async function POST(request: NextRequest) {
   try {
-    const body = (await request.json()) as Partial<MemoryFormData>;
+    const body = (await request.json()) as Partial<MemoryFormData> & { feedback?: string };
 
-    // Validate all fields present, non-empty, and within length limits
+    // Validate required fields
     for (const field of REQUIRED_FIELDS) {
       const value = body[field];
       if (!value || typeof value !== "string" || !value.trim()) {
@@ -35,8 +29,43 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const memory = body as MemoryFormData;
-    const prompt = composePrompt(memory);
+    // Validate optional fields if provided
+    for (const field of OPTIONAL_FIELDS) {
+      const value = body[field];
+      if (value && typeof value === "string" && value.length > MAX_FIELD_LENGTH) {
+        return NextResponse.json(
+          { error: `Field ${field} exceeds maximum length of ${MAX_FIELD_LENGTH} characters` },
+          { status: 400 }
+        );
+      }
+    }
+
+    // Validate feedback if provided
+    const feedback = body.feedback;
+    if (feedback !== undefined) {
+      if (typeof feedback !== "string") {
+        return NextResponse.json(
+          { error: "Feedback must be a string" },
+          { status: 400 }
+        );
+      }
+      if (feedback.length > MAX_FEEDBACK_LENGTH) {
+        return NextResponse.json(
+          { error: `Feedback exceeds maximum length of ${MAX_FEEDBACK_LENGTH} characters` },
+          { status: 400 }
+        );
+      }
+    }
+
+    const memory: MemoryFormData = {
+      who: body.who!,
+      where: body.where!,
+      what: body.what!,
+      atmosphere: body.atmosphere || "",
+      details: body.details || "",
+      feeling: body.feeling || "",
+    };
+    const prompt = composePrompt(memory, feedback);
 
     const output = await replicate.run(MODEL_ID, {
       input: {

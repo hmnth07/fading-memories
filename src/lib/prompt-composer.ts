@@ -149,7 +149,7 @@ function extractDetailPhrases(text: string): string[] {
   return phrases.slice(0, 5);
 }
 
-export function composePrompt(memory: MemoryFormData): string {
+export function composePrompt(memory: MemoryFormData, feedback?: string): string {
   const tags: string[] = [...QUALITY_PREFIX];
 
   // People
@@ -203,6 +203,11 @@ export function composePrompt(memory: MemoryFormData): string {
   } else {
     const feeling = memory.feeling.trim();
     if (feeling) tags.push(feeling);
+  }
+
+  // Append user feedback for iteration
+  if (feedback && feedback.trim()) {
+    tags.push(feedback.trim());
   }
 
   tags.push(...STYLE_SUFFIX);

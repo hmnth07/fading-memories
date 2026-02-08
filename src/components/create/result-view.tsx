@@ -3,14 +3,17 @@
 import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import type { GenerationResult } from "@/types/memory";
-import { Download, RefreshCw, Film, Loader2 } from "lucide-react";
+import { Download, RefreshCw, Film, Loader2, Sparkles } from "lucide-react";
 import { encodeGif, type ParticleType } from "@/lib/gif-encoder";
 
 interface ResultViewProps {
   result: GenerationResult;
   onCreateAnother: () => void;
+  onIterate: (feedback: string) => void;
+  remainingGenerations: number;
 }
 
 const PARTICLE_OPTIONS: { label: string; value: ParticleType }[] = [
@@ -21,10 +24,11 @@ const PARTICLE_OPTIONS: { label: string; value: ParticleType }[] = [
   { label: "Fireflies", value: "firefly" },
 ];
 
-export function ResultView({ result, onCreateAnother }: ResultViewProps) {
+export function ResultView({ result, onCreateAnother, onIterate, remainingGenerations }: ResultViewProps) {
   const [gifState, setGifState] = useState<"idle" | "selecting" | "encoding" | "done">("idle");
   const [selectedParticle, setSelectedParticle] = useState<ParticleType>("sakura");
   const [gifUrl, setGifUrl] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState("");
   const imgRef = useRef<HTMLImageElement>(null);
 
   const handleDownloadImage = useCallback(async () => {
@@ -68,6 +72,13 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
     document.body.removeChild(a);
   }, [gifUrl]);
 
+  function handleRegenerate() {
+    if (feedback.trim() && remainingGenerations > 0) {
+      onIterate(feedback.trim());
+      setFeedback("");
+    }
+  }
+
   return (
     <div className="w-full max-w-2xl mx-auto animate-fade-in">
       <div className="text-center mb-8">
@@ -80,7 +91,7 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
       </div>
 
       {/* Image */}
-      <Card className="overflow-hidden border-0 shadow-xl mb-8">
+      <Card className="overflow-hidden border-0 shadow-xl mb-6">
         <div className="relative aspect-square">
           <Image
             ref={imgRef}
@@ -90,6 +101,34 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
             className="object-cover"
             unoptimized
           />
+        </div>
+      </Card>
+
+      {/* Iterate / Refine */}
+      <Card className="p-4 border-[#E5D9C8] mb-6">
+        <label className="block text-sm font-medium mb-2">What would you change?</label>
+        <Textarea
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
+          placeholder="Make the sky more orange, add cherry blossoms, change the lighting..."
+          rows={2}
+          maxLength={500}
+          disabled={remainingGenerations === 0}
+          className="resize-none text-sm leading-relaxed bg-white/60 backdrop-blur-sm border-[#E5D9C8] focus:border-[#C2410C] focus:ring-[#C2410C]/20 mb-3"
+        />
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-muted-foreground">
+            {remainingGenerations} generation{remainingGenerations !== 1 ? "s" : ""} remaining today
+          </p>
+          <Button
+            onClick={handleRegenerate}
+            disabled={!feedback.trim() || remainingGenerations === 0}
+            size="sm"
+            className="bg-gradient-to-r from-[#C2410C] to-[#9A3412] hover:from-[#9A3412] hover:to-[#78350F] text-white gap-2"
+          >
+            <Sparkles className="w-3 h-3" />
+            Regenerate
+          </Button>
         </div>
       </Card>
 
@@ -112,20 +151,11 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
           <Film className="w-4 h-4" />
           Make it a Living Photo
         </Button>
-
-        <Button
-          onClick={onCreateAnother}
-          variant="ghost"
-          className="flex-1 gap-2"
-        >
-          <RefreshCw className="w-4 h-4" />
-          Create Another
-        </Button>
       </div>
 
       {/* Particle selection */}
       {gifState === "selecting" && (
-        <Card className="p-6 border-[#E5D9C8] animate-fade-in">
+        <Card className="p-6 border-[#E5D9C8] animate-fade-in mb-6">
           <h3 className="font-semibold mb-3">Choose a particle effect</h3>
           <div className="flex flex-wrap gap-2 mb-4">
             {PARTICLE_OPTIONS.map((opt) => (
@@ -154,7 +184,7 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
 
       {/* Encoding state */}
       {gifState === "encoding" && (
-        <Card className="p-6 border-[#E5D9C8] animate-fade-in">
+        <Card className="p-6 border-[#E5D9C8] animate-fade-in mb-6">
           <div className="flex items-center gap-3 text-muted-foreground">
             <Loader2 className="w-5 h-5 animate-spin" />
             <span>Creating your living photo...</span>
@@ -164,7 +194,7 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
 
       {/* GIF result */}
       {gifState === "done" && gifUrl && (
-        <Card className="overflow-hidden border-0 shadow-xl animate-fade-in">
+        <Card className="overflow-hidden border-0 shadow-xl animate-fade-in mb-6">
           <div className="relative aspect-square">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -184,6 +214,18 @@ export function ResultView({ result, onCreateAnother }: ResultViewProps) {
           </div>
         </Card>
       )}
+
+      {/* Create Another — ghost button at bottom */}
+      <div className="text-center">
+        <Button
+          onClick={onCreateAnother}
+          variant="ghost"
+          className="gap-2 text-muted-foreground"
+        >
+          <RefreshCw className="w-4 h-4" />
+          Create Another Memory
+        </Button>
+      </div>
     </div>
   );
 }
